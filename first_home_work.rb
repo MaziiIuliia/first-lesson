@@ -95,7 +95,7 @@ class FirstHomeWork < Test::Unit::TestCase
     login
     sleep 3
     createnewproject
-    sleep 3
+    sleep 5
     issue_creation_bug
     sleep 5
     actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
@@ -106,7 +106,7 @@ class FirstHomeWork < Test::Unit::TestCase
     login
     sleep 3
     createnewproject
-    sleep 3
+    sleep 5
     issue_creation_feature
     sleep 5
     actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
@@ -117,7 +117,7 @@ class FirstHomeWork < Test::Unit::TestCase
     login
     sleep 3
     createnewproject
-    sleep 3
+    sleep 5
     issue_creation_bug
     sleep 5
     actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
@@ -128,26 +128,26 @@ class FirstHomeWork < Test::Unit::TestCase
     login
     sleep 3
     createnewproject
-    sleep 3
-    issue_creation_feature
+    sleep 5
+    issue_creation_bug
     sleep 3
     @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
     sleep 5
       actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Critical Bug')]")
-    assert(actual_result.displayed?)
+    assert(actual_result)
   end
 
   def test_issue_feature_check
     login
     sleep 3
     createnewproject
-    sleep 3
-    issue_creation_support
+    sleep 5
+    issue_creation_feature
     sleep 3
     @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
     sleep 5
     actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Feature')]")
-    assert(actual_result.displayed?)
+    assert(actual_result)
   end
 
 
@@ -155,13 +155,13 @@ class FirstHomeWork < Test::Unit::TestCase
     login
     sleep 3
     createnewproject
-    sleep 3
+    sleep 5
     issue_creation_support
     sleep 3
     @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
     sleep 5
     actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Support')]")
-    assert(actual_result.displayed?)
+    assert(actual_result)
   end
 
   def teardown

@@ -34,6 +34,7 @@ module OurModule
     @wait.until {@driver.find_element(:class, 'icon-passwd').displayed?}
 
     @driver.find_element(:class, 'icon-passwd').click
+    sleep 3
     @driver.find_element(:id, 'password').send_keys 'juma'
     @driver.find_element(:id, 'new_password').send_keys 'jumazii'
     @driver.find_element(:id, 'new_password_confirmation').send_keys 'jumazii'
