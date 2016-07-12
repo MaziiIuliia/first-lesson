@@ -135,6 +135,4 @@ module OurModule
     @driver.find_element(:xpath, "//form[@id='issue-form']//input[@value='Create']").click
   end
 
-
-
 end
