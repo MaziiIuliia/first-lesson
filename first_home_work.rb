@@ -81,15 +81,15 @@ class FirstHomeWork < Test::Unit::TestCase
 
     @driver.find_element(:id, 'tab-members').click
 
-    @wait.until {@driver.find_element(:xpath, "//a[@class='user active']").displayed?}
+    @wait.until {@driver.find_element(:css, "a[class='user active']").displayed?}
 
-    users_before = @driver.find_elements(:xpath, "//a[@class='user active']").length
+    users_before = @driver.find_elements(:css, "a[class='user active']").length
 
     add_new_user
 
     sleep 5
 
-    users_after = @driver.find_elements(:xpath, "//a[@class='user active']").length
+    users_after = @driver.find_elements(:css, "a[class='user active']").length
     assert(users_after > users_before)
   end
 
@@ -104,13 +104,13 @@ class FirstHomeWork < Test::Unit::TestCase
 
     add_new_user
 
-    @wait.until {@driver.find_element(:xpath, "//td[@class='buttons']//a[@class='icon icon-edit']").displayed?}
+    @wait.until {@driver.find_element(:css, "#tab-content-members a[class='icon icon-edit']").displayed?}
 
     user_roles
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='tab-content-members']//span[contains(text(),'Manager')]").displayed?}
+    @wait.until {@driver.find_element(:css, "#tab-content-members td[class='roles'] span").displayed?}
 
-    role_after = @driver.find_element(:xpath, "//div[@id='tab-content-members']//span[contains(text(),'Manager')]").text
+    role_after = @driver.find_element(:css, "#tab-content-members td[class='roles'] span").text
     assert_equal('Manager, Developer', role_after)
   end
 
@@ -125,9 +125,9 @@ class FirstHomeWork < Test::Unit::TestCase
 
     new_version
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='tab-content-versions']//td[@class='name']").displayed?}
+    @wait.until {@driver.find_element(:css, "#tab-content-versions td[class='name']").displayed?}
 
-    actual_version = @driver.find_element(:xpath, "//div[@id='tab-content-versions']//td[@class='name']").text
+    actual_version = @driver.find_element(:css, "#tab-content-versions td[class='name']").text
     assert_equal(@version_name, actual_version)
   end
 
@@ -138,14 +138,15 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_bug
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]").displayed?}
+    @wait.until {@driver.find_element(:id, 'flash_notice').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
-    assert(actual_result.displayed?)
+    actual_result = @driver.find_element(:id, 'flash_notice').text
+    string = 'created'
+    assert(actual_result.include?(string))
   end
 
   def test_issue_creation_feature
@@ -155,13 +156,13 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_feature
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]").displayed?}
+    @wait.until {@driver.find_element(:id, 'flash_notice').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
+    actual_result = @driver.find_element(:id, 'flash_notice')
     assert(actual_result.displayed?)
   end
 
@@ -172,13 +173,13 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_support
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]").displayed?}
+    @wait.until {@driver.find_element(:id, 'flash_notice').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//div[@id='main']//div[@id='content']//a[contains(@href,'/issues/')]")
+    actual_result = @driver.find_element(:id, 'flash_notice')
     assert(actual_result.displayed?)
   end
 
@@ -189,18 +190,19 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_bug
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'Issues')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'issues').displayed?}
 
-    @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
+    @driver.find_element(:class, 'issues').click
 
-    @wait.until {@driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Critical Bug')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'subject').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Critical Bug')]")
-    assert(actual_result)
+    subjects = @driver.find_elements(:class, 'subject').map(&:text)
+    string = 'Critical Bug'
+    assert(subjects.include?(string))
   end
 
   def test_issue_feature_check
@@ -210,18 +212,19 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_feature
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'Issues')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'issues').displayed?}
 
-    @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
+    @driver.find_element(:class, 'issues').click
 
-    @wait.until {@driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Feature')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'subject').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Feature')]")
-    assert(actual_result)
+    subjects = @driver.find_elements(:class, 'subject').map(&:text)
+    string = 'Feature'
+    assert(subjects.include?(string))
   end
 
 
@@ -232,25 +235,27 @@ class FirstHomeWork < Test::Unit::TestCase
 
     create_new_project
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'New issue')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'new-issue').displayed?}
 
     issue_creation_support
 
-    @wait.until {@driver.find_element(:xpath, "//a[contains(text(),'Issues')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'issues').displayed?}
 
-    @driver.find_element(:xpath, "//a[contains(text(),'Issues')]").click
+    @driver.find_element(:class, 'issues').click
 
-    @wait.until {@driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Support')]").displayed?}
+    @wait.until {@driver.find_element(:class, 'subject').displayed?}
 
-    actual_result = @driver.find_element(:xpath, "//td[@class='subject']//a[contains(text(),'Support')]")
-    assert(actual_result)
+    subjects = @driver.find_elements(:class, 'subject').map(&:text)
+
+    string = 'Support'
+    assert(subjects.include?(string))
   end
 
   def teardown
     @driver.quit
   end
 
-  
+
 end
 
 

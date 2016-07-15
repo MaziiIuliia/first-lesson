@@ -46,9 +46,9 @@ module OurModule
   def create_new_project
     @driver.find_element(:class, 'projects').click
 
-    @wait.until {@driver.find_element(:class, 'icon-add').displayed?}
+    @wait.until {@driver.find_element(:css, "a[class='icon icon-add']").displayed?}
 
-    @driver.find_element(:class, 'icon-add').click
+    @driver.find_element(:css, "a[class='icon icon-add']").click
 
     @wait.until {@driver.find_element(:id, 'project_name').displayed?}
 
@@ -66,8 +66,7 @@ module OurModule
     @wait.until {@driver.find_element(:id, 'tab-members').displayed?}
 
     @driver.find_element(:id, 'tab-members').click
-
-    @driver.find_element(:class, 'icon-add').click
+    @driver.find_element(:css, "a[class='icon icon-add']").click
 
     @wait.until {@driver.find_element(:id, 'principal_search').displayed?}
 
@@ -76,28 +75,27 @@ module OurModule
     @wait.until {@driver.find_element(:css, '#principals input').displayed?}
 
     @driver.find_element(:css, '#principals input').click
-
     @driver.find_element(:css, "div#ajax-modal input[value='3']").click
     @driver.find_element(:id, 'member-add-submit').click
   end
 
   def user_roles
-    @driver.find_element(:xpath, "//td[@class='buttons']//a[@class='icon icon-edit']").click
+    @driver.find_element(:css, "a[class='icon icon-edit']").click
 
-    @wait.until {@driver.find_element(:xpath, "//td[@class='roles']//input[@value='4']").displayed?}
+    @wait.until {@driver.find_element(:css, "#tab-content-members input[value='4']").displayed?}
 
-    @driver.find_element(:xpath, "//td[@class='roles']//input[@value='4']").click
-    @driver.find_element(:xpath, "//td[@class='roles']//input[@value='Save']").click
+    @driver.find_element(:css, "#tab-content-members input[value='4']").click
+    @driver.find_element(:css, "#tab-content-members input[value='Save']").click
   end
 
   def new_version
     @driver.find_element(:id, 'tab-versions').click
 
-    @wait.until {@driver.find_element(:xpath, "//div[@id='tab-content-versions']//a[contains(text(),'New version')]").displayed?}
+    @wait.until {@driver.find_element(:css, "#tab-content-versions a[class='icon icon-add']").displayed?}
 
-    @driver.find_element(:xpath, "//div[@id='tab-content-versions']//a[contains(text(),'New version')]").click
+    @driver.find_element(:css, "#tab-content-versions a[class='icon icon-add']").click
 
-    @wait.until {@driver.find_element(:id, 'version_name').displayed?}
+    @wait.until {@driver.find_element(:css, "input[id='version_name']").displayed?}
 
     @version_name = ('version' + rand(9999).to_s)
     @driver.find_element(:id, 'version_name').send_keys @version_name
@@ -105,34 +103,34 @@ module OurModule
   end
 
   def issue_creation_bug
-    @driver.find_element(:xpath, "//a[contains(text(),'New issue')]").click
+    @driver.find_element(:css, "#main-menu a[class='new-issue']").click
 
     @wait.until {@driver.find_element(:id, 'issue_subject').displayed?}
 
     @driver.find_element(:id, 'issue_subject').send_keys 'Critical Bug'
-    @driver.find_element(:xpath, "//form[@id='issue-form']//input[@value='Create and continue']").click
+    @driver.find_element(:css, "#issue-form input[name='commit']").click
   end
 
   def issue_creation_feature
-    @driver.find_element(:xpath, "//a[contains(text(),'New issue')]").click
+    @driver.find_element(:css, "#main-menu a[class='new-issue']").click
 
     @wait.until {@driver.find_element(:id, 'issue_subject').displayed?}
 
     @driver.find_element(:id, 'issue_subject').send_keys 'Feature'
 
-    @driver.find_element(:name, "issue[tracker_id]").find_element(:xpath, "//select[@name='issue[tracker_id]']//option[@value='2']").click
+    @driver.find_element(:name, "issue[tracker_id]").find_element(:css, "#issue-form select option[value='2']").click
 
-    @driver.find_element(:xpath, "//form[@id='issue-form']//input[@value='Create']").click
+    @driver.find_element(:css, "#issue-form input[name='commit']").click
   end
 
   def issue_creation_support
-    @driver.find_element(:xpath, "//a[contains(text(),'New issue')]").click
+    @driver.find_element(:css, "#main-menu a[class='new-issue']").click
 
     @wait.until {@driver.find_element(:id, 'issue_subject').displayed?}
 
     @driver.find_element(:id, 'issue_subject').send_keys 'Support'
-    @driver.find_element(:name, "issue[tracker_id]").find_element(:xpath, "//select[@name='issue[tracker_id]']//option[@value='3']").click
-    @driver.find_element(:xpath, "//form[@id='issue-form']//input[@value='Create']").click
+    @driver.find_element(:name, "issue[tracker_id]").find_element(:css, "#issue-form select option[value='3']").click
+    @driver.find_element(:css, "#issue-form input[name='commit']").click
   end
 
 end
